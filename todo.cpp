@@ -21,7 +21,7 @@ int main(int argc, char** argv)
         std::cout << "$ ./todo report           # Statistics\n";
     }
 
-    // ls command to see all the todos that are not yet complete
+    // ls command to see all the tasks that are not yet complete
     if (argc == 2 && strcmp(argv[1], "ls") == 0) {
 
         // Opn file in input mode
@@ -36,18 +36,18 @@ int main(int argc, char** argv)
 
         std::vector<std::string> tasks;
 
-        // Save all todos as strings in a vector
+        // Save all tasks as strings in a vector
         while (std::getline(file, str)) {
             tasks.push_back(str);
         }
 
-        // Display message if there are no todos (vector is empty)
+        // Display message if there are no tasks (vector is empty)
         if (tasks.size() == 0 || (tasks.size() == 1 && tasks[0].length() == 0)) {
             std::cout << "There are no pending todos!\n";
             return 0;
         }
 
-        // Most recently added todo is displayed first
+        // Most recently added task is displayed first
         for (int i = tasks.size() - 1; i >= 0; i--) {
             std::cout << "[" << i + 1 << "] " << tasks[i] << "\n";
         }
@@ -56,19 +56,19 @@ int main(int argc, char** argv)
         file.close();
     }
 
-    // Attempting to add a todo with nom message
+    // Attempting to add a task with nom message
     if (argc == 2 && strcmp(argv[1], "add") == 0) {
         std::cout << "Error: Missing todo string. Nothing added!\n";
         return 0;
     }
 
-    // Adding a new todo
+    // Adding a new task
     if (argc == 3 && strcmp(argv[1], "add") == 0) {
         
-        // Store new todo as string
+        // Store new task as string
         std::string newTask = argv[2];
 
-        // Attempting to add empty todo, i.e. todo with no message
+        // Attempting to add empty task, i.e. task with no message
         if (newTask.length() == 0) {
             std::cout << "Error: Missing todo string. Nothing added!\n";
             return 0;
@@ -82,7 +82,7 @@ int main(int argc, char** argv)
             return 0;  
         }
 
-        // Append new todo to file
+        // Append new task to file
         file << newTask << "\n";
 
         // Display success message
@@ -92,16 +92,16 @@ int main(int argc, char** argv)
         file.close();
     }
 
-    // Attempting to delete a todo item without giving an index number 
+    // Attempting to delete a task without giving an index number 
     if (argc == 2 && strcmp(argv[1], "del") == 0) {
         std::cout << "Error: Missing NUMBER for deleting todo.\n";
         return 0;
     }
 
-    // Deleting a todo
+    // Deleting a task
     if (argc == 3 && strcmp(argv[1], "del") == 0) {
 
-        // Store index number of todo to be deleted
+        // Store index number of task to be deleted
         size_t taskNumber = atoi(argv[2]);
 
         // Open file in input mode
@@ -116,18 +116,18 @@ int main(int argc, char** argv)
 
         std::vector<std::string> tasks;
 
-        // Save all todos as strings in a vector
+        // Save all tasks as strings in a vector
         while (std::getline(file, str)) {
             tasks.push_back(str);
         }
 
-        // Attempting to delete a non-existed todo item
+        // Attempting to delete a non-existed tasks
         if (taskNumber < 1 || taskNumber > tasks.size()) {
             std::cout << "Error: todo #" << taskNumber << " does not exist. Nothing deleted.\n";
             return 0;
         }
 
-        // Remove the required todo from the vector
+        // Remove the required task from the vector
         tasks.erase(tasks.begin() + taskNumber - 1);
 
         // Open todo.txt file in "truncate" mode, which clears all the content of the file
@@ -138,10 +138,10 @@ int main(int argc, char** argv)
         // Close the file
         file.close();
 
-        // Open the file again to append the new set of todos to it (after deleting the required todo)
+        // Open the file again to append the new set of tasks to it (after deleting the required todo)
         file.open("todo.txt", std::ios::app);
 
-        // Append the todos line by line
+        // Append the tasks line by line
         for (auto& it : tasks) {
             file << it << "\n";
         }
@@ -153,7 +153,7 @@ int main(int argc, char** argv)
         file.close();
     }
 
-    // Attempting to mark as done a todo item without giving an index number
+    // Attempting to mark as done a task without giving an index number
     if (argc == 2 && strcmp(argv[1], "done") == 0) {
         std::cout << "Error: Missing NUMBER for marking todo as done.\n";
         return 0;
